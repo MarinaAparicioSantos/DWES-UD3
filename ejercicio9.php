@@ -11,29 +11,30 @@
 <?php
 
     $fechaNacimiento = "31-05-2000";
-
-    $fechaActual = date("d-m-Y");
-   
-    echo $fechaActual;
-
+    $diaActual = Date("Y-m-d");
+    $edad_diff = date_diff(date_create($fechaNacimiento),date_create($diaActual));
+    var_dump($edad_diff);
     echo "<br>";
-    $separadaNacimiento = explode("-", $fechaNacimiento);
-    $separadaActual = explode("-", $fechaActual);
-
-    var_dump($separadaActual[2]-$separadaNacimiento[2]);
-    echo "<br>";
+    echo $edad_diff ->y;
 
 
-    if(($separadaActual[2]-$separadaNacimiento[2])>=18){
+    if($edad_diff ->y < 18){
+
+        echo "No puedes pasar, eres menor de edad.";
+    }else  if($edad_diff ->y >= 18  && $edad_diff ->y <=65){
 
         echo "Puedes pasar";
 
-    }
-    
-    if(($separadaActual[2]-$separadaNacimiento[2])<18){
 
-        echo "No puedes pasar";
+    }else  if($edad_diff ->y >65){
+
+        echo "Eres demasiado mayor para pasar";
+
+    }else{
+
+        echo "Dato incorrecto";
     }
+
 ?>
     
 </body>
