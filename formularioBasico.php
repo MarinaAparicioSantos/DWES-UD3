@@ -7,77 +7,57 @@
     <title>Formulario</title>
 </head>
 <body>
-
 <?php
-
-
-
-if (empty($_POST["usuario"])){
-
-    $errorUsuario = "el usuario debe estar relleno";
-}
-else{
-    $usuario= $_POST["usuario"];
-}
-if(empty($_POST["contrasenya"]))
-{
-   $errorContrasenya = "la contraseña debe estar rellena";
-}
-else{
-    $contrasenya=$_POST["contrasenya"];
-}
-
-
-
-
-$usuario = $_POST["usuario"];
-$contrasenya = $_POST["contrasenya"];
-
 $usuario="";
 $contrasenya="";
+$errorUsuario="";
+$errorContrasenya="";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        
+        if (empty($_POST["usuario"])){
+            $errorUsuario = "el usuario debe estar relleno";
+        }
+        else{
+            $usuario= $_POST["usuario"];
+        }
+        if(empty($_POST["contrasenya"]))
+        {
+            $errorContrasenya = "la contraseña debe estar rellena";
+        }
+        else{
+            $contrasenya=$_POST["contrasenya"];
+        }
+        if(!preg_match('/\w{8,}/', $usuario)){
+            $errorUsuario = "el usuario '<b>$usuario</b>' no es correcto, debe contener...";
+        }
+        if(!preg_match("/[A-Z][a-z]{15}[0-9]/", $contrasenya)){
+            $errorContrasenya = "la contraseña '<b>$contrasenya</b>' no es correcta, debe contener...";
+        }
+        $usuario = stripslashes($usuario);
+        $usuario = strip_tags($usuario);
+        $usuario = htmlspecialchars($usuario);
 
-$usuario = strip_tags($usuario);
-
-echo $usuario;
-
-$usuario = stripslashes($usuario);
-
-echo $usuario;
-
-$usuario = htmlspecialchars($usuario);
-
-echo $usuario;
-
- 
-
-
-// if(preg_match ("(?=\w*\[0-9)(?=\w*[A-Z])\S{8,}$", $contrasenya )){
-
-//     echo "contraseña valida";
-// }
-
-?>
-
-
+        $contrasenya = stripslashes($contrasenya);
+        $contrasenya = strip_tags($contrasenya);
+        $contrasenya = htmlspecialchars($contrasenya);
+    }
+    ?>
     <h1>Formulario Actividad Aula</h1>
-    <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="_post">
+    <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="Post">
         <p>
             <label for="usuario">Usuario</label>
-            <input type="text" name="usuario"/>
-            <span style="color:red">*</span>
+            <input type="text" name="usuario" value="<?php echo $usuario;?>"/>
+            <span style="color:red"><?php echo $errorUsuario;?> *</span>
         </p>
         <p>
             <label for="contrasenya">Contraseña</label>
-            <input type="password" name="contrasenya"/>
-            <span style="color:red">*</span>
+            <input type="password" name="contrasenya" value="<?php echo $contrasenya;?>"/>
+            <span style="color:red"><?php echo $errorContrasenya?> *</span>
         </p>
         <p>
-<input type="submit" name="enviar" value="Aceptar"/>
-<input type="reset" name="cancelar" value="Cancelar"/>
-  </p>
+            <input type="submit" name="enviar" value="Aceptar"/>
+            <input type="reset" name="cancelar" value="Cancelar"/>
+        </p>
     </form>
-
-
-
 </body>
 </html>
