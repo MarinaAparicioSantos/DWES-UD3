@@ -134,11 +134,7 @@
             </p>
 
             <input type="radio" name="transporte" value="1">Wifi
-
-
             <input type="radio" name="transporte" value="2">Cable
-
-
             <input type="radio" name="transporte" value="3">Fibra
 
             <p>
@@ -167,7 +163,7 @@
                 <option>Viernes</option>
 
 
-        </select>
+            </select>
         </form>
 
 
