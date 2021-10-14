@@ -15,12 +15,16 @@
     $direccion="";
     $instituto="";
     $estudiosElegidos="";
+    $placehorder="";
 
     $errorNombre="";
     $errorApellidos="";
     $errorDireccion="";
     $errorInstituto="";
     $errorEstudiosElegidos="";
+    $errorDiaSemana="";
+    $errorCheckbox="";
+    $errorInternet="";
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -31,69 +35,72 @@
         else{
             $nombre= $_POST["nombre"];
         }
+
+
+
         if(empty($_POST["apellidos"])){
             $errorApellidos = "el apellido debe estar relleno";
         }
         else{
             $apellidos=$_POST["apellidos"];
         }
+
+
+
         if(empty($_POST["direccion"])){
             $errorDireccion = "la direccion debe estar rellena";
         }
         else{
             $direccion=$_POST["direccion"];
         }
+
+
+        if(empty($_POST["internet"])){
+  
+            $errorInternet =  "Ninguno de los 3 radios ha sido activado.<br>";
+        }
+
         if(empty($_POST["instituto"])){
-            $errorInstituto = "el instituto debe estar relleno";
+            $errorInstituto = "instituto debe estar relleno";
         }
         else{
             $instituto=$_POST["instituto"];
         }
+
+        
         if(empty($_POST["estudiosElegidos"])){
             $errorEstudiosElegidos = "estudios elegidos debe estar relleno";
         }
         else{
             $estudiosElegidos=$_POST["estudiosElegidos"];
         }
-        if(!preg_match('^[I][E][S]', $instituto)){
-            $errorInstituto = "el'<b>$instituto</b>' debe comenzar por IES.";
+
+
+        if(!preg_match('(IES.*)', $instituto)){
+            $errorInstituto = "el instituto '<b>$instituto</b>' no es correcto, debe contener IES";
         }
-        if(isset($_POST["radio"])){
-            echo "Campo de radio enviado: ".$_POST["radio"]."<br/>";
-        }else{
-            echo "El campo de radio no ha sido activado. Por lo tanto, no
-            se ha recibido ningún valor de este.<br/>";
+
+
+        if(empty($_POST["diaSemana"])){
+  
+            $errorDiaSemana = "Ninguno de los dias de la semana ha sido elegido.<br>";
         }
-        if(isset($_POST["radio"])){
-            echo "Campos de checkbox enviados:";
-    
-            foreach($_POST["radio"] as $valorRadio){
-                echo " ".$valorRadio;
-            }
         
+
+
+        if(empty($_POST["camposCheckbox"])){
+  
+            $errorCheckbox = "Ninguno de los 4 checkbox ha sido activado.<br>";
         }
-        if(isset($_POST["checkbox"])){
-            echo "Campo de checkbox enviado: ".$_POST["checkbox"]."<br/>";
-        }else{
-            echo "El campo de checkbox no ha sido activado. Por lo tanto, no
-            se ha recibido ningún valor de este.<br/>";
-        }
-        if(isset($_POST["checkbox"])){
-            echo "Campos de checkbox enviados:";
-    
-            foreach($_POST["checkbox"] as $valorCheckbox){
-                echo " ".$valorCheckbox;
-            }
-        }
-        if(isset($_POST["diaSemana"])){
-            echo "Campos de SELECT Multiple enviados:";
-            foreach($_POST["diaSemana"] as $valorSelectMultiple){
-                echo " ".$valorSelectMultiple;
-            }
-            echo "<br/>";
-        }else{
-            echo "Ninguno de las opciones de la lista han sido seleccionadas.";
-        }
+
+         
+/*         if(isset($_REQUEST["camposCheckbox"])){
+   
+        } else{
+
+            $errorCheckbox = "Ninguno de los 4 checkbox ha sido activado.<br>";
+        } */
+       
 
         $nombre = stripslashes($nombre);
         $nombre = strip_tags($nombre);
@@ -107,6 +114,14 @@
         $direccion = strip_tags($direccion);
         $direccion = htmlspecialchars($direccion);
 
+        $estudiosElegidos = stripslashes($estudiosElegidos);
+        $estudiosElegidos = strip_tags($estudiosElegidos);
+        $estudiosElegidos = htmlspecialchars($estudiosElegidos);
+
+        $placehorder = stripslashes($placehorder);
+        $placehorder = strip_tags($placehorder);
+        $placehorder = htmlspecialchars($placehorder);
+
     }
 
     ?>
@@ -118,8 +133,8 @@
         <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="Post">
 
             <p>
-                <label for="usuario">Nombre</label>
-                <input type="text" name="usuario" value="<?php echo $nombre;?>"/>
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value="<?php echo $nombre;?>"/>
                 <span style="color:red"><?php echo $errorNombre?></span>
             </p>
             <p>
@@ -133,13 +148,15 @@
                 <span style="color:red"><?php echo $errorDireccion?></span>
             </p>
 
-            <input type="radio" name="transporte" value="1">Wifi
-            <input type="radio" name="transporte" value="2">Cable
-            <input type="radio" name="transporte" value="3">Fibra
+            <input type="radio" name="internet" value="1">Wifi
+            <input type="radio" name="internet" value="2">Cable
+            <input type="radio" name="internet" value="3">Fibra
+            <span style="color:red"><?php echo $errorInternet?></span>
+
 
             <p>
-                <label for="Instituto">Instituto</label>
-                <input type="text" name="Instituto" value="<?php echo $instituto;?>"/>
+                <label for="instituto">Instituto</label>
+                <input type="text" name="instituto" value="<?php echo $instituto;?>"/>
                 <span style="color:red"><?php echo $errorInstituto?></span>
             </p>
 
@@ -162,30 +179,20 @@
 
                 <option>Viernes</option>
 
-
             </select>
-        </form>
+            <span style="color:red"><?php echo $errorDiaSemana?></span>
 
 
-    </fieldset>
+            <div>
+                Historia<input type="checkbox" name="camposCheckbox[]" value="1">
+                Geografia<input type="checkbox" name="camposCheckbox[]" value="2">
+                Lengua<input type="checkbox" name="camposCheckbox[]" value="3">
+                Matematicas<input type="checkbox" name="camposCheckbox[]" value="4">
+            </div>
+            <span style="color:red"><?php echo $errorCheckbox?></span>
 
-    <fieldset>
 
-        <legend>Preferencias</legend>
-
-        <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="Post">
-
-        <input type="checkbox" name="asignaturas" value="1">Historia
-
-        <input type="checkbox" name="asignaturas" value="1">Geografía
-
-        <input type="checkbox" name="asignaturas" value="1">Lengua
-
-        <input type="checkbox" name="asignaturas" value="1">Matemáticas
-
-        <br>
-
-        <textarea placeholder="Inserta aquí el texto" cols="38" rows="6"></textarea>
+            <textarea placeholder="Inserta aquí el texto" cols="38" rows="6" value=<?php $placehorder;?>></textarea>
 
         <p>
             <input type="submit" name="enviar" value="Aceptar"/>

@@ -14,6 +14,7 @@ $poblacion="";
 $codigoPostal="";
 $errorPoblacion="";
 $errorCodigoPostal="";
+$errorCheckbox="";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
@@ -30,6 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $codigoPostal=$_POST["codigoPostal"];
     }
     
+    if(empty($_POST["provincias"])){
+  
+        $errorCheckbox = "Ninguno de los 8 radios ha sido activado.<br>";
+    }
 
     $poblacion = stripslashes($poblacion);
     $poblacion = strip_tags($poblacion);
@@ -64,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="radio" name="provincias" value="6">Málaga
         <input type="radio" name="provincias" value="7">Cádiz
         <input type="radio" name="provincias" value="8">Almería
+        <span style="color:red"><?php echo $errorCheckbox?></span>
 
         <br>
 
