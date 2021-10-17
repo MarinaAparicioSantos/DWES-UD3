@@ -59,22 +59,27 @@
         }
 
 
-/*         if(empty($_POST["internet"])){
-  
-            $errorInternet =  "Ninguno de los 3 radios ha sido activado.<br>";
-        } */
 
-        if(isset($_POST["internet"])){
+/*         if(isset($_POST["internet"])){
 
             $internet = $_POST["internet"];
    
         } else{
 
             $errorInternet = "Ninguno de los 3 radios ha sido activado.<br>";
+        } */
+
+
+        
+        if (isset($_POST["internet"])) {
+            foreach ($_POST["internet"] as $valorRadio) {
+                echo $valorRadio;
+            }
+        } else {
+            $errorInternet = "Indique su conexión a Internet, por favor";
         }
 
-
-
+/* 
         if(empty($_POST["instituto"])){
             $errorInstituto = "instituto debe estar relleno";
         }
@@ -84,6 +89,14 @@
 
         if(!preg_match('/(IES.*)/', $instituto)){
             $errorInstituto = "el instituto '<b>$instituto</b>' no es correcto, debe contener IES";
+        } */
+
+        $instituto = ($_POST["instituto"]);
+
+        if (empty($instituto)) {
+            $errorInstituto = "Campo Obligatorio a rellenar";
+        } else if (!preg_match("/^IES/", $instituto)) {
+            $errorInstituto = "Error. Debe empezar por IES";
         }
 
         
@@ -166,9 +179,9 @@
                 <span style="color:red"><?php echo $errorDireccion?></span>
             </p>
 
-            <input type="radio" name="internet" value="<?php echo $internet = "1";?>">Wifi
-            <input type="radio" name="internet" value="<?php echo $internet = "2";?>">Cable
-            <input type="radio" name="internet" value="<?php echo $internet = "3";?>">Fibra
+            <input type="radio" name="internet" value= "1">Wifi
+            <input type="radio" name="internet" value= "2">Cable
+            <input type="radio" name="internet" value= "3">Fibra
             <span style="color:red"><?php echo $errorInternet?></span>
 
 
@@ -202,10 +215,10 @@
 
 
             <div>
-                Historia<input type="checkbox" name="camposCheckbox[]" value="1">">
-                Geografia<input type="checkbox" name="camposCheckbox[]" value="2">">
-                Lengua<input type="checkbox" name="camposCheckbox[]" value="3">">
-                Matematicas<input type="checkbox" name="camposCheckbox[]" value="4">">
+                Historia<input type="checkbox" name="camposCheckbox[]" value="1">
+                Geografia<input type="checkbox" name="camposCheckbox[]" value="2">
+                Lengua<input type="checkbox" name="camposCheckbox[]" value="3">
+                Matematicas<input type="checkbox" name="camposCheckbox[]" value="4">
             </div>
             <span style="color:red"><?php echo $errorCheckbox?></span>
 
