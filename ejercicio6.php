@@ -27,7 +27,7 @@
 
             for($i = 0; $limite>=$i; $i++){
 
-            $elevado = pow(2,$i);
+            $elevado = pow($numero,$i);
             echo "<tr>";
             echo "<td>$i</td>";
             echo"<td>$elevado</td>";

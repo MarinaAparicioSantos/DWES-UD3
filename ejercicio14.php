@@ -23,9 +23,6 @@
     
     echo "<br>";
 
-
-
-
     echo "El array contiene ",count($meses), " meses.";
 
     echo "<br>";
@@ -48,7 +45,6 @@
     var_dump($meses);
     echo "<br>";
     $meses[5] = "Mayo";
-    $meses[] = "Junio";
     $meses[] = "Julio";
     $meses[] = "Agosto";
     $meses[] = "Septiembre";

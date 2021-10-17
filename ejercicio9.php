@@ -13,7 +13,7 @@
     $fechaNacimiento = "31-05-2000";
     $diaActual = Date("Y-m-d");
     $edad_diff = date_diff(date_create($fechaNacimiento),date_create($diaActual));
-    var_dump($edad_diff);
+    //var_dump($edad_diff);
     echo "<br>";
     echo $edad_diff ->y;
 

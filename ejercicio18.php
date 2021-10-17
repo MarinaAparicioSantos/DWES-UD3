@@ -10,31 +10,59 @@
 
 <?php
 
+$validador = true;
+
 $poblacion="";
 $codigoPostal="";
+$provincias="";
 $errorPoblacion="";
 $errorCodigoPostal="";
-$errorCheckbox="";
+$errorProvincias="";
+$placehorder="";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
     if (empty($_POST["poblacion"])){
         $errorPoblacion = "el poblacion debe estar relleno";
+        $validador = false;
     }
     else{
         $poblacion= $_POST["poblacion"];
     }
     if(empty($_POST["codigoPostal"])){
         $errorCodigoPostal = "el codigoPostal debe estar relleno";
+        $validador = false;
     }
     else{
         $codigoPostal=$_POST["codigoPostal"];
     }
-    
-    if(empty($_POST["provincias"])){
-  
-        $errorCheckbox = "Ninguno de los 8 radios ha sido activado.<br>";
+
+    if(!preg_match("/^[a-zA-Z]+$/", $poblacion)){
+        $errorPoblacion = "el '<b>$poblacion</b>' no es correcto, debe ser solo letras";
+        $validador = false;
     }
+
+    if(!preg_match("/^[0-9]+$/", $codigoPostal)){
+        $errorCodigoPostal = "el '<b>$codigoPostal</b>' no es correcto, debe ser solo numeros";
+        $validador = false;
+    }
+    
+
+
+    if(isset($_POST["provincias"])){
+
+        $provincias = $_POST["provincias"];
+
+    } else{
+
+        $errorProvincias = "Ninguno de los 8 radios ha sido activado.<br>";
+        $validador = false;
+    }
+
+    if ($validador) { // SI ES TRUE
+        header("Location:/DWES-UD3/correcto.php");
+    }
+
 
     $poblacion = stripslashes($poblacion);
     $poblacion = strip_tags($poblacion);
@@ -43,6 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $codigoPostal = stripslashes($codigoPostal);
     $codigoPostal = strip_tags($codigoPostal);
     $codigoPostal = htmlspecialchars($codigoPostal);
+
+    $placehorder = stripslashes($placehorder);
+    $placehorder = strip_tags($placehorder);
+    $placehorder = htmlspecialchars($placehorder);
 }
 
 ?>
@@ -61,19 +93,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <span style="color:red"><?php echo $errorCodigoPostal?></span>
         </p>
 
-        <input type="radio" name="provincias" value="1">Granada
-        <input type="radio" name="provincias" value="2">Huelva
-        <input type="radio" name="provincias" value="3">Sevilla
-        <input type="radio" name="provincias" value="4">Jaén
-        <input type="radio" name="provincias" value="5">Córdoba
-        <input type="radio" name="provincias" value="6">Málaga
-        <input type="radio" name="provincias" value="7">Cádiz
-        <input type="radio" name="provincias" value="8">Almería
-        <span style="color:red"><?php echo $errorCheckbox?></span>
+        <input type="radio" name="provincias" value="<?php echo $provincias = "1";?>">Granada
+        <input type="radio" name="provincias" value="<?php echo $provincias = "2";?>">Huelva
+        <input type="radio" name="provincias" value="<?php echo $provincias = "3";?>">Sevilla
+        <input type="radio" name="provincias" value="<?php echo $provincias = "4";?>">Jaén
+        <input type="radio" name="provincias" value="<?php echo $provincias = "5";?>">Córdoba
+        <input type="radio" name="provincias" value="<?php echo $provincias = "6";?>">Málaga
+        <input type="radio" name="provincias" value="<?php echo $provincias = "7";?>">Cádiz
+        <input type="radio" name="provincias" value="<?php echo $provincias = "8";?>">Almería
+        <span style="color:red"><?php echo $errorProvincias?></span>
 
         <br>
 
-        <textarea placeholder="Inserta aquí la descripción." cols="38" rows="6"></textarea>
+        <textarea placeholder="Inserta aquí la descripción." cols="38" rows="6" value=<?php $placehorder;?>></textarea>
 
         <br>
 

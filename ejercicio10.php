@@ -11,13 +11,10 @@
 
 $numero_calculo = 4;
 $factorial = 1;
-for($i = $numero_calculo; $i== 1; $i--){
-
-    $factorial = $factorial * $numero_calculo;
-
+for ($i = 1; $i <= $numero_calculo; $i++){ 
+  $factorial = $factorial * $i; 
 }
-
-echo "El factorial de ", $numero_calculo , "es ", $factorial;
+echo "El factorial de ", $numero_calculo , " es ", $factorial;
     
 ?>
 

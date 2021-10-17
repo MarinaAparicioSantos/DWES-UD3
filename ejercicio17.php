@@ -16,6 +16,10 @@
     $instituto="";
     $estudiosElegidos="";
     $placehorder="";
+    $diaSemana="";
+    $checkbox="";
+    $internet="";
+
 
     $errorNombre="";
     $errorApellidos="";
@@ -55,16 +59,31 @@
         }
 
 
-        if(empty($_POST["internet"])){
+/*         if(empty($_POST["internet"])){
   
             $errorInternet =  "Ninguno de los 3 radios ha sido activado.<br>";
+        } */
+
+        if(isset($_POST["internet"])){
+
+            $internet = $_POST["internet"];
+   
+        } else{
+
+            $errorInternet = "Ninguno de los 3 radios ha sido activado.<br>";
         }
+
+
 
         if(empty($_POST["instituto"])){
             $errorInstituto = "instituto debe estar relleno";
         }
         else{
             $instituto=$_POST["instituto"];
+        }
+
+        if(!preg_match('/(IES.*)/', $instituto)){
+            $errorInstituto = "el instituto '<b>$instituto</b>' no es correcto, debe contener IES";
         }
 
         
@@ -76,30 +95,29 @@
         }
 
 
-        if(!preg_match('(IES.*)', $instituto)){
-            $errorInstituto = "el instituto '<b>$instituto</b>' no es correcto, debe contener IES";
-        }
 
 
-        if(empty($_POST["diaSemana"])){
+
+     /*    if(empty($_POST["diaSemana"])){
   
             $errorDiaSemana = "Ninguno de los dias de la semana ha sido elegido.<br>";
+        } */
+
+        if(isset($_POST["diaSemana"])){
+           $diaSemana = $_POST["diaSemana"];
+        }else{
+            $errorDiaSemana = "Indique sus preferencias, por favor";
         }
         
 
+        if(isset($_POST["camposCheckbox"])){
 
-        if(empty($_POST["camposCheckbox"])){
-  
-            $errorCheckbox = "Ninguno de los 4 checkbox ha sido activado.<br>";
-        }
-
-         
-/*         if(isset($_REQUEST["camposCheckbox"])){
+            $checkbox = $_POST["camposCheckbox"];
    
         } else{
 
             $errorCheckbox = "Ninguno de los 4 checkbox ha sido activado.<br>";
-        } */
+        }
        
 
         $nombre = stripslashes($nombre);
@@ -148,9 +166,9 @@
                 <span style="color:red"><?php echo $errorDireccion?></span>
             </p>
 
-            <input type="radio" name="internet" value="1">Wifi
-            <input type="radio" name="internet" value="2">Cable
-            <input type="radio" name="internet" value="3">Fibra
+            <input type="radio" name="internet" value="<?php echo $internet = "1";?>">Wifi
+            <input type="radio" name="internet" value="<?php echo $internet = "2";?>">Cable
+            <input type="radio" name="internet" value="<?php echo $internet = "3";?>">Fibra
             <span style="color:red"><?php echo $errorInternet?></span>
 
 
@@ -167,7 +185,7 @@
             </p>
 
 
-            <select name="diaSemana" size="4" multiple>
+            <select value ="diaSemana" name="diaSemana" size="4">
 
                 <option>Lunes</option>
 
@@ -184,10 +202,10 @@
 
 
             <div>
-                Historia<input type="checkbox" name="camposCheckbox[]" value="1">
-                Geografia<input type="checkbox" name="camposCheckbox[]" value="2">
-                Lengua<input type="checkbox" name="camposCheckbox[]" value="3">
-                Matematicas<input type="checkbox" name="camposCheckbox[]" value="4">
+                Historia<input type="checkbox" name="camposCheckbox[]" value="1">">
+                Geografia<input type="checkbox" name="camposCheckbox[]" value="2">">
+                Lengua<input type="checkbox" name="camposCheckbox[]" value="3">">
+                Matematicas<input type="checkbox" name="camposCheckbox[]" value="4">">
             </div>
             <span style="color:red"><?php echo $errorCheckbox?></span>
 

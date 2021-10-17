@@ -11,9 +11,10 @@
 <table border="1">
 <?php
 
-    $contador;
+    $contador = 0;
 
     for($i=0; $i < 10; $i++){
+
         if($i%2==0){
 
             echo "<tr style='background-color:white'>";
@@ -38,3 +39,6 @@
 </table>
 </body>
 </html>
+
+
+
