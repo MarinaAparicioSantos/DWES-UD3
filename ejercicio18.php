@@ -22,27 +22,29 @@ $placehorder="";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
-    if (empty($_POST["poblacion"])){
+    $poblacion = $_POST["poblacion"];
+    $poblacion = stripslashes($poblacion);
+    $poblacion = strip_tags($poblacion);
+    $poblacion = htmlspecialchars($poblacion);
+    if (empty($poblacion)){
         $errorPoblacion = "el poblacion debe estar relleno";
         $validador = false;
     }
-    else{
-        $poblacion= $_POST["poblacion"];
-    }
-    if(empty($_POST["codigoPostal"])){
-        $errorCodigoPostal = "el codigoPostal debe estar relleno";
-        $validador = false;
-    }
-    else{
-        $codigoPostal=$_POST["codigoPostal"];
-    }
-
-    if(!preg_match("/^[a-zA-Z]+$/", $poblacion)){
+    else if(!preg_match("/^[a-zA-Z]+$/", $poblacion)){
         $errorPoblacion = "el '<b>$poblacion</b>' no es correcto, debe ser solo letras";
         $validador = false;
     }
 
-    if(!preg_match("/^[0-9]+$/", $codigoPostal)){
+
+    $codigoPostal = $_POST["codigoPostal"];
+    $codigoPostal = stripslashes($codigoPostal);
+    $codigoPostal = strip_tags($codigoPostal);
+    $codigoPostal = htmlspecialchars($codigoPostal);
+    if(empty($codigoPostal)){
+        $errorCodigoPostal = "el codigoPostal debe estar relleno";
+        $validador = false;
+    }
+   else if(!preg_match("/^[0-9]+$/", $codigoPostal)){
         $errorCodigoPostal = "el '<b>$codigoPostal</b>' no es correcto, debe ser solo numeros";
         $validador = false;
     }
@@ -59,18 +61,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $validador = false;
     }
 
+/*         if (isset($_POST["provincias"])) {
+            foreach ($_POST["provincias"] as $valorRadio) {
+                echo $valorRadio;
+            }
+        } else {
+            $errorProvincias = "Indique su provincia, por favor";
+        }  */
+
     if ($validador) { // SI ES TRUE
         header("Location:/DWES-UD3/correcto.php");
     }
 
-
-    $poblacion = stripslashes($poblacion);
-    $poblacion = strip_tags($poblacion);
-    $poblacion = htmlspecialchars($poblacion);
-
-    $codigoPostal = stripslashes($codigoPostal);
-    $codigoPostal = strip_tags($codigoPostal);
-    $codigoPostal = htmlspecialchars($codigoPostal);
 
     $placehorder = stripslashes($placehorder);
     $placehorder = strip_tags($placehorder);
@@ -93,14 +95,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <span style="color:red"><?php echo $errorCodigoPostal?></span>
         </p>
 
-        <input type="radio" name="provincias" value="<?php echo $provincias = "1";?>">Granada
-        <input type="radio" name="provincias" value="<?php echo $provincias = "2";?>">Huelva
-        <input type="radio" name="provincias" value="<?php echo $provincias = "3";?>">Sevilla
-        <input type="radio" name="provincias" value="<?php echo $provincias = "4";?>">Jaén
-        <input type="radio" name="provincias" value="<?php echo $provincias = "5";?>">Córdoba
-        <input type="radio" name="provincias" value="<?php echo $provincias = "6";?>">Málaga
-        <input type="radio" name="provincias" value="<?php echo $provincias = "7";?>">Cádiz
-        <input type="radio" name="provincias" value="<?php echo $provincias = "8";?>">Almería
+        <input type="radio" name="provincias" value="granada">
+        <label for="granada">Granada</label>
+        <input type="radio" name="provincias" value="huelva">
+        <label for="huelva">Huelva</label>
+        <input type="radio" name="provincias" value="sevilla">
+        <label for="sevilla">Sevilla</label>
+        <input type="radio" name="provincias" value="jaen">
+        <label for="jaen">Jaén</label>
+        <input type="radio" name="provincias" value="cordoba">
+        <label for="cordoba">Córdoba</label>
+        <input type="radio" name="provincias" value="malaga">
+        <label for="malaga">Málaga</label>
+        <input type="radio" name="provincias" value="cadiz">
+        <label for="cadiz">Cádiz</label>
+        <input type="radio" name="provincias" value="almeria">
+        <label for="cadiz">Cádiz</label>
         <span style="color:red"><?php echo $errorProvincias?></span>
 
         <br>
